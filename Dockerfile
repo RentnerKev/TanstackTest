@@ -4,14 +4,18 @@ WORKDIR /app
 
 COPY package*.json ./
 
+# Installiert alle Abhängigkeiten
 RUN npm install
 
 COPY . .
 
-# Baut die App in den 'dist' Ordner
+# Baut die App
 RUN npm run build
 
+# Port 3000 freigeben
 EXPOSE 3000
 
-# HIER WAR DER FEHLER: Pfad auf dist/server/server.js angepasst
-CMD ["node", "dist/server/server.js"]
+# WICHTIG: Nutze 'vite preview' via npm run serve
+# --host 0.0.0.0 erlaubt Zugriff von außen (Coolify)
+# --port 3000 zwingt den Server auf den richtigen Port
+CMD ["npm", "run", "serve", "--", "--host", "0.0.0.0", "--port", "3000"]
