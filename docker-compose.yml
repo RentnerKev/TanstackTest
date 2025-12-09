@@ -1,14 +1,17 @@
+version: '3.8'
 services:
-  db:
-    image: postgres:17.0
-    hostname: ${DB_HOST}
+  app:
+    # Stelle sicher, dass hier das Build-Kontext oder Image 
+    # für deinen Node.js-Container korrekt ist (siehe vorherige Antwort)
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
     ports:
-      - "5432:${DB_PORT}"
+      - "3000:3000"
+
     environment:
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata:
+      # Hier injiziert Coolify den kompletten Datenbank-Link
+      # Dein Code verwendet diese Variable, um sich zu verbinden
+      DATABASE_URL: ${DATABASE_URL}
+      # Entferne alle DB_HOST, DB_USER, etc.
