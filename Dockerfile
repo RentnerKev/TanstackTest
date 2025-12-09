@@ -15,7 +15,6 @@ RUN npm run build
 # Port 3000 freigeben
 EXPOSE 3000
 
-# WICHTIG: Nutze 'vite preview' via npm run serve
-# --host 0.0.0.0 erlaubt Zugriff von außen (Coolify)
-# --port 3000 zwingt den Server auf den richtigen Port
-CMD ["npm", "run", "serve", "--", "--host", "0.0.0.0", "--port", "3000"]
+ENV PORT=3000
+ENV HOST=0.0.0.0
+CMD ["node", "dist/server/server.js"]
